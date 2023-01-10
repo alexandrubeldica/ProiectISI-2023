@@ -24,6 +24,13 @@ const routes: Routes = [
         (m) => m.DashboardModule
       ),
     ...canActivate(redirectUnauthorizedToLogin),
+  },{
+    path: 'dashboard-admin',
+    loadChildren: () =>
+      import('./features/dashboard-admin/dashboard-admin.module').then(
+        (m) => m.DashboardAdminModule
+      ),
+    ...canActivate(redirectUnauthorizedToLogin),
   },
   {
     path: '**',

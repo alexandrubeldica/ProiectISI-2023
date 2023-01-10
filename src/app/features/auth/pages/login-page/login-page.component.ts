@@ -20,7 +20,12 @@ export class LoginPageComponent implements OnInit {
   login(loginData: LoginData) {
     this.authService
       .login(loginData)
-      .then(() => this.router.navigate(['/dashboard']))
+      .then(() => {
+        if(loginData.email==="maria@gmail.com")
+          this.router.navigate(['/dashboard-admin'])
+        else
+          this.router.navigate(['/dashboard'])
+      })
       .catch((e) => console.log(e.message));
   }
 
