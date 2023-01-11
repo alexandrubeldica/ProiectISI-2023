@@ -5,11 +5,14 @@ import {
   ViewChild,
   EventEmitter,
   OnDestroy } from '@angular/core';
+import { FirebaseService } from 'src/app/core/services/firebase-service.service';
 
 import { AuthService } from '../../core/services/auth.service';
 import { Router } from '@angular/router';
 import { setDefaultOptions, loadModules } from 'esri-loader';
 import { Subscription } from "rxjs";
+import { RestaurantFormComponent } from './restaurant-form/restaurant-form.component';
+import Restaurant from 'src/app/core/interfaces/restaurant.model';
 import esri = __esri; // Esri TypeScript Types
 
 
@@ -19,7 +22,7 @@ import esri = __esri; // Esri TypeScript Types
   styleUrls: ['./dashboard-admin.component.scss'],
 })
 export class DashboardAdminComponent implements OnInit, OnDestroy {
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(private authService: AuthService, private router: Router, private fbs: FirebaseService) {}
 
   @ViewChild("mapViewNode", { static: true }) private mapViewEl: ElementRef;
 
@@ -51,6 +54,11 @@ export class DashboardAdminComponent implements OnInit, OnDestroy {
   dir: number = 0;
   count: number = 0;
   timeoutHandler = null;
+
+  // firebase sync
+  isConnected: boolean = false;
+  subscriptionList: Subscription;
+  subscriptionObj: Subscription;
 
   async initializeMap() {
     try {
@@ -204,5 +212,21 @@ export class DashboardAdminComponent implements OnInit, OnDestroy {
       // destroy the map view
       this.view.container = null;
     }
+  }
+
+  connectFirebase() {
+    if (this.isConnected) {
+      return;
+    }
+    this.isConnected = true;
+    this.fbs.connectToDatabase();
+    this.subscriptionList = this.fbs.getChangeFeedList().subscribe((items: Restaurant[]) => {
+      console.log("got new items from list: ", items);
+      this.graphicsLayer.removeAll();
+      for (let item of items) {
+        this.addPoint(item.longitude, item.latitude, false);
+        this.fbs.addPointItem(item);
+      }
+    });
   }
 }

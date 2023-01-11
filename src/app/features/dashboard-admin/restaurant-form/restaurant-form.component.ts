@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { FirebaseService } from 'src/app/core/services/firebase-service.service';
 import Restaurant from '../../../core/interfaces/restaurant.model';
+import { DashboardAdminComponent } from '../dashboard-admin.component';
 
 @Component({
   selector: 'app-restaurant-form',
@@ -9,16 +9,13 @@ import Restaurant from '../../../core/interfaces/restaurant.model';
 })
 export class RestaurantFormComponent {
 
-  isConnected: boolean = false;
-  restaurant: Restaurant = new Restaurant()
+  restaurant = new Restaurant();
 
   constructor(
-    private fbs: FirebaseService
+    private dashboard: DashboardAdminComponent
   ) { }
 
-  submitted = false;
-
   save(): void {
-    this.fbs.addPointItem(this.restaurant);
+    this.dashboard.connectFirebase();
   }
 }

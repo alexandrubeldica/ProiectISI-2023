@@ -8,12 +8,12 @@
 
       <div class="form-group">
         <label for="longitude">Longitude</label>
-        <input type="text" class="form-control" id="longitude" required [(ngModel)]="restaurant.longitude" name="longitude">
+        <input type="number" class="form-control" id="longitude" required [(ngModel)]="restaurant.longitude" name="longitude">
       </div>
 
       <div class="form-group">
         <label for="latitude">Latitude</label>
-        <input type="text" class="form-control" id="latitude" required [(ngModel)]="restaurant.latitude" name="latitude">
+        <input type="number" class="form-control" id="latitude" required [(ngModel)]="restaurant.latitude" name="latitude">
       </div>
 
       <button type="submit" class="btn btn-success" (click)="save()">Submit</button>
