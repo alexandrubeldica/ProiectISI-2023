@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { FirebaseService } from 'src/app/core/services/firebase-service.service';
+import Restaurant from '../../../core/interfaces/restaurant.model';
 
 @Component({
   selector: 'app-restaurant-form',
@@ -7,13 +9,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class RestaurantFormComponent {
 
+  isConnected: boolean = false;
+  restaurant: Restaurant = new Restaurant()
+
   constructor(
+    private fbs: FirebaseService
   ) { }
 
   submitted = false;
 
-  onSubmit() {
-    this.submitted = true;
+  save(): void {
+    this.fbs.addPointItem(this.restaurant);
   }
-
 }

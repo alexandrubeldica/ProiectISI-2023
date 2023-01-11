@@ -21,7 +21,7 @@ export class LoginPageComponent implements OnInit {
     this.authService
       .login(loginData)
       .then(() => {
-        if(loginData.email==="maria@gmail.com")
+        if(loginData.email==="m@m.com")
           this.router.navigate(['/dashboard-admin'])
         else
           this.router.navigate(['/dashboard'])
