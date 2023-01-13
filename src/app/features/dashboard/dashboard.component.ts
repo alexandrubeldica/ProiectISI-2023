@@ -11,6 +11,7 @@ import { Router } from '@angular/router';
 import { setDefaultOptions, loadModules } from 'esri-loader';
 import { Subscription } from "rxjs";
 import esri = __esri; // Esri TypeScript Types
+import { FirebaseService } from 'src/app/core/services/firebase-service.service';
 
 
 @Component({
@@ -19,7 +20,7 @@ import esri = __esri; // Esri TypeScript Types
   styleUrls: ['./dashboard.component.scss'],
 })
 export class DashboardComponent implements OnInit, OnDestroy {
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(private authService: AuthService, private router: Router, private fbs: FirebaseService) {}
 
   @ViewChild("mapViewNode", { static: true }) private mapViewEl: ElementRef;
 
@@ -41,6 +42,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
   pointGraphic: esri.Graphic;
   graphicsLayer: esri.GraphicsLayer;
  
+  // firebase sync
+  isConnected: boolean = false;
 
   // Attributes
   zoom = 12;
@@ -91,6 +94,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
       this.addGraphicLayers();
 
       this.addPoint(this.pointCoords[1], this.pointCoords[0], true);
+      this.initializePointsOnMap();
 
       // Initialize the MapView
       const mapViewProperties = {
@@ -204,5 +208,19 @@ export class DashboardComponent implements OnInit, OnDestroy {
       // destroy the map view
       this.view.container = null;
     }
+  }
+
+  initializePointsOnMap() {
+    if (!this.isConnected) {
+      this.fbs.connectToDatabase();
+      this.isConnected = true;
+    }
+    this.fbs.getAllRestaurants().valueChanges(['child_changed'])
+          .subscribe(actions => {
+            actions.forEach(action => {
+              this.addPoint(action.latitude, action.longitude, false)
+              // console.log(action.name);
+            })
+          })
   }
 }

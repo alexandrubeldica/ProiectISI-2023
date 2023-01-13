@@ -11,10 +11,9 @@ import { AuthService } from '../../core/services/auth.service';
 import { Router } from '@angular/router';
 import { setDefaultOptions, loadModules } from 'esri-loader';
 import { Subscription } from "rxjs";
-import { RestaurantFormComponent } from './restaurant-form/restaurant-form.component';
 import Restaurant from 'src/app/core/interfaces/restaurant.model';
 import esri = __esri; // Esri TypeScript Types
-
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-dashboard-admin',
@@ -36,6 +35,7 @@ export class DashboardAdminComponent implements OnInit, OnDestroy {
   _RouteParameters;
   _FeatureSet;
   _Point;
+  _Locate;
   _locator;
 
   // Instances
@@ -57,8 +57,6 @@ export class DashboardAdminComponent implements OnInit, OnDestroy {
 
   // firebase sync
   isConnected: boolean = false;
-  subscriptionList: Subscription;
-  subscriptionObj: Subscription;
 
   async initializeMap() {
     try {
@@ -67,7 +65,7 @@ export class DashboardAdminComponent implements OnInit, OnDestroy {
       setDefaultOptions({ css: true });
 
       // Load the modules for the ArcGIS API for JavaScript
-      const [esriConfig, Map, MapView, FeatureLayer, Graphic, Point, GraphicsLayer] = await loadModules([
+      const [esriConfig, Map, MapView, FeatureLayer, Graphic, Point, GraphicsLayer, Locate] = await loadModules([
         "esri/config",
         "esri/Map",
         "esri/views/MapView",
@@ -75,9 +73,8 @@ export class DashboardAdminComponent implements OnInit, OnDestroy {
         "esri/Graphic",
         "esri/geometry/Point",
         "esri/layers/GraphicsLayer",
+        "esri/widgets/Locate",
       ]);
-
-      // esriConfig.apiKey = "MY_API_KEY";
 
       this._Map = Map;
       this._MapView = MapView;
@@ -85,6 +82,7 @@ export class DashboardAdminComponent implements OnInit, OnDestroy {
       this._Graphic = Graphic;
       this._GraphicsLayer = GraphicsLayer;
       this._Point = Point;
+      this._Locate = Locate;
 
       esriConfig.apiKey = "AAPK3bb84377534f45308d3724b0ff5fc06al8ttIhyK2iQI9_x3xU_4zItzpcq56u99ddU2j2zJODpfc2abUERjNmfatJZuvyaz";
 
@@ -99,7 +97,8 @@ export class DashboardAdminComponent implements OnInit, OnDestroy {
       this.addGraphicLayers();
 
       this.addPoint(this.pointCoords[1], this.pointCoords[0], true);
-
+      this.initializePointsOnMap();
+      
       // Initialize the MapView
       const mapViewProperties = {
         container: this.mapViewEl.nativeElement,
@@ -214,19 +213,30 @@ export class DashboardAdminComponent implements OnInit, OnDestroy {
     }
   }
 
-  connectFirebase() {
-    if (this.isConnected) {
-      return;
+  connectFirebase(restaurant: Restaurant) {
+    if (!this.isConnected) {
+      this.fbs.connectToDatabase();
+      this.isConnected = true;
     }
-    this.isConnected = true;
-    this.fbs.connectToDatabase();
-    this.subscriptionList = this.fbs.getChangeFeedList().subscribe((items: Restaurant[]) => {
-      console.log("got new items from list: ", items);
-      this.graphicsLayer.removeAll();
-      for (let item of items) {
-        this.addPoint(item.longitude, item.latitude, false);
-        this.fbs.addPointItem(item);
-      }
-    });
+    console.log("new: ", restaurant.name);
+    this.addPoint(restaurant.latitude, restaurant.longitude, false);
+    this.fbs.addPointItem(restaurant);
+    
   }
+
+  initializePointsOnMap() {
+    if (!this.isConnected) {
+      this.fbs.connectToDatabase();
+      this.isConnected = true;
+    }
+    this.fbs.getAllRestaurants().valueChanges(['child_changed'])
+          .subscribe(actions => {
+            actions.forEach(action => {
+              this.addPoint(action.latitude, action.longitude, false)
+              // console.log(action.name);
+            })
+          })
+  }
+
+  
 }

@@ -16,6 +16,6 @@ export class RestaurantFormComponent {
   ) { }
 
   save(): void {
-    this.dashboard.connectFirebase();
+    this.dashboard.connectFirebase(this.restaurant);
   }
 }
