@@ -1,0 +1,455 @@
+{
+    "type": "FeatureCollection",
+    "features": [{
+        "type": "Feature",
+        "geometry":{
+            "type": "Point",
+            "coordinates":[26.095716717154737, 44.45802641237723]
+        },
+        "properties":{
+            "name":"Restaurantul Barrio "
+        }
+    },{
+        "type": "Feature",
+        "geometry":{
+            "type": "Point",
+            "coordinates":[26.130096959116905, 44.439868162943014]
+        },
+        "properties":{
+            "name":"Taverna bucatarilor"
+        }
+    },{
+        "type": "Feature",
+        "geometry":{
+            "type": "Point",
+            "coordinates":[26.09946289894408, 44.45041891998412]
+    },
+        "properties":{
+            "name":"Trattoria 20"
+    }
+    },{
+        "type": "Feature",
+        "geometry":{
+            "type": "Point",
+            "coordinates":[26.109639155885358, 44.41501164706001]
+        },
+        "properties":{
+            "name":"Pub 18"
+        }
+    },{
+        "type": "Feature",
+        "geometry":{
+            "type": "Point",
+            "coordinates":[26.10508926382494, 44.42749043571961]
+        },
+        "properties":{
+            "name":"NoName"
+        }
+    },{"type": "Feature",
+    "geometry":{
+        "type": "Point",
+        "coordinates":[25.994306098391277, 44.43586325220541]
+    },
+    "properties":{
+        "name":"Hanul Drumetului"
+    }
+    },{
+        "type": "Feature",
+        "geometry":{
+            "type": "Point",
+            "coordinates":[26.084772277037096, 44.44762647628471]
+        },
+        "properties":{
+            "name":"Restaurantul Schiorilor"
+        }
+    },{
+        "type": "Feature",
+        "geometry":{
+            "type": "Point",
+            "coordinates":[26.098620172191893, 44.44315240030881]
+        },
+        "properties":{
+            "name":"Arogant"
+        }
+    },{"type": "Feature",
+    "geometry":{
+        "type": "Point",
+        "coordinates":[26.095509066879483, 44.442922699754604]
+    },
+    "properties":{
+        "name":"Monato"
+    }
+    },{
+        "type": "Feature",
+        "geometry":{
+            "type": "Point",
+            "coordinates":[26.095509, 44.4429226]
+        },
+        "properties":{
+            "name": "restaurant"
+        }
+    },{
+        "type": "Feature",
+        "geometry":{
+            "type": "Point",
+            "coordinates":[26.064403615410523, 44.500004259348685]
+        },
+        "properties":{
+            "name":"Five"
+        }
+    },{"type": "Feature",
+    "geometry":{
+        "type": "Point",
+        "coordinates":[26.07574657588554, 44.476884329095505]
+    },
+    "properties":{
+        "name":"Caru cu bere"
+    }
+    },{"type": "Feature",
+    "geometry":{
+        "type": "Point",
+        "coordinates":[26.096675771423136, 44.44384821109345]
+    },
+    "properties":{
+        "name":"Sky is the limit"
+    }
+    },{
+        "type": "Feature",
+        "geometry":{
+            "type": "Point",
+            "coordinates":[26.16263946981741, 44.43759809787371]
+        },
+        "properties":{
+            "name":"Bar & Grill"
+        }
+    },{"type": "Feature",
+    "geometry":{
+        "type": "Point",
+        "coordinates":[26.110300651858317, 44.41571563270259]
+    },
+    "properties":{
+        "name":"De Cartier"
+    }
+    },{"type": "Feature",
+    "geometry":{
+        "type": "Point",
+        "coordinates":[26.05183355458123, 44.43180299920964]
+    },
+    "properties":{
+        "name":"Restaurant Afi"
+    }
+    },{"type": "Feature",
+    "geometry":{
+        "type": "Point",
+        "coordinates":[26.125538535567923, 44.42115744329865]
+    },
+    "properties":{
+        "name":"Restaurantul Faimosilor"
+    }
+    },{
+        "type": "Feature",
+    "geometry":{
+        "type": "Point",
+        "coordinates":[26.149720394498395, 44.42234037858435]
+    },
+    "properties":{
+        "name":"Park Lake Restaurant"
+    }
+    },{
+        "type": "Feature",
+    "geometry":{
+        "type": "Point",
+        "coordinates":[26.042723950189618, 44.42092085336932]
+    },
+    "properties":{
+        "name":"Taverna regilor"
+    }
+    },{
+        "type": "Feature",
+    "geometry":{
+        "type": "Point",
+        "coordinates":[26.109969393516806, 44.430620255404214]
+    },
+    "properties":{
+        "name":"Bucatarul"
+    }
+    },{"type": "Feature",
+    "geometry":{
+        "type": "Point",
+        "coordinates":[26.1073193267847, 44.4566350900806]
+    },
+    "properties":{
+        "name":"La circ"
+    }
+    },{
+        "type": "Feature",
+    "geometry":{
+        "type": "Point",
+        "coordinates":[26.125207277226416, 44.46408265901438]
+    },
+    "properties":{
+        "name":"Restaurant Tei"
+    }
+    },{
+        "type": "Feature",
+    "geometry":{
+        "type": "Point",
+        "coordinates":[26.0955075792347, 44.45888019795857]
+    },
+    "properties":{
+        "name":"Ana Restaurant"
+    }
+    },{
+        "type": "Feature",
+    "geometry":{
+        "type": "Point",
+        "coordinates":[26.028011264717353, 44.4420290790909]
+    },
+    "properties":{
+        "name":"Weiss Beer"
+    }
+    },{
+        "type": "Feature",
+        "geometry":{
+            "type": "Point",
+            "coordinates":[26.03187076105852, 44.43959391471407]
+        },
+        "properties":{
+            "name":"Coferarie"
+        }
+    },{
+        "type": "Feature",
+    "geometry":{
+        "type": "Point",
+        "coordinates":[26.037076593332657, 44.43356965097112]
+    },
+    "properties":{
+        "name":"Cora Restaurant"
+    }
+    },{
+        "type": "Feature",
+    "geometry":{
+        "type": "Point",
+        "coordinates":[26.100890935897024, 44.436144656500254]
+    },
+    "properties":{
+        "name":"La Universitate"
+    }
+    },{
+        "type": "Feature",
+    "geometry":{
+        "type": "Point",
+        "coordinates":[26.089615931658855, 44.43984928822512]
+    },
+    "properties":{
+        "name":"Tulin"
+    }
+    },{
+        "type": "Feature",
+    "geometry":{
+        "type": "Point",
+        "coordinates":[26.102786734009968, 44.412629018205216]
+    },
+    "properties":{
+        "name":"Terasa Corporatistilor"
+    }
+    },{
+        "type": "Feature",
+    "geometry":{
+        "type": "Point",
+        "coordinates":[26.095303324117378, 44.416406409787015]
+    },
+    "properties":{
+        "name":"Dines"
+    }
+    },{
+        "type": "Feature",
+    "geometry":{
+        "type": "Point",
+        "coordinates":[26.14309736863139, 44.418829513652476]
+    },
+    "properties":{
+        "name":"Dristor"
+    }
+    },{
+        "type": "Feature",
+    "geometry":{
+        "type": "Point",
+        "coordinates":[26.061396630145, 44.44515201344346]
+    },
+    "properties":{
+        "name":"La Orhideea"
+    }
+    },{
+        "type": "Feature",
+    "geometry":{
+        "type": "Point",
+        "coordinates":[26.051649445696256, 44.446012073753536]
+    },
+    "properties":{
+        "name":"La Maria si Ion"
+    }
+    },{
+        "type": "Feature",
+    "geometry":{
+        "type": "Point",
+        "coordinates":[26.091076259196797, 44.42786993711223]
+    },
+    "properties":{
+        "name":"La Palat"
+    }
+    },{
+        "type": "Feature",
+    "geometry":{
+        "type": "Point",
+        "coordinates":[26.09972825438164, 44.440851521951274]
+    },
+    "properties":{
+        "name":"Gellato"
+    }
+    },{
+        "type": "Feature",
+    "geometry":{
+        "type": "Point",
+        "coordinates":[26.110570631425926, 44.40565379152635]
+    },
+    "properties":{
+        "name":"Lumea copiilor"
+    }
+    },{
+        "type": "Feature",
+    "geometry":{
+        "type": "Point",
+        "coordinates":[26.14389559991535, 44.43265353832668]
+    },
+    "properties":{
+        "name":"La stadion"
+    }
+    },{
+        "type": "Feature",
+    "geometry":{
+        "type": "Point",
+        "coordinates":[26.097498458581285, 44.43058726825556]
+    },
+    "properties":{
+        "name":"In centru"
+    }
+    },{
+        "type": "Feature",
+    "geometry":{
+        "type": "Point",
+        "coordinates":[26.09540310381136, 44.442912556012786]
+    },
+    "properties":{
+        "name":"Linea"
+    }
+    },{
+        "type": "Feature",
+    "geometry":{
+        "type": "Point",
+        "coordinates":[26.099693592149777, 44.44084664868588]
+    },
+    "properties":{
+        "name":"Nuba"
+    }
+    },{
+        "type": "Feature",
+    "geometry":{
+        "type": "Point",
+        "coordinates":[26.099294476955503, 44.443981100102846]
+    },
+    "properties":{
+        "name":"La Lugo"
+    }
+    },{
+        "type": "Feature",
+    "geometry":{
+        "type": "Point",
+        "coordinates":[26.116655987906313, 44.437783272321475]
+    },
+    "properties":{
+        "name":"Intre strazi"
+    }
+    },{
+        "type": "Feature",
+    "geometry":{
+        "type": "Point",
+        "coordinates":[26.123939840201768, 44.43286728623356]
+    },
+    "properties":{
+        "name":"La Calarasi"
+    }
+    },{
+        "type": "Feature",
+    "geometry":{
+        "type": "Point",
+        "coordinates":[26.0765102411122, 44.46969784803621]
+    },
+    "properties":{
+        "name":"Hard Rock Cafe"
+    }
+    },{
+        "type": "Feature",
+    "geometry":{
+        "type": "Point",
+        "coordinates":[26.086914539119288, 44.46875998031228]
+    },
+    "properties":{
+        "name":"La Laguna"
+    }
+    },{
+        "type": "Feature",
+    "geometry":{
+        "type": "Point",
+        "coordinates":[26.07935773327696, 44.48579556094946]
+    },
+    "properties":{
+        "name":"Diplomat"
+    }
+    },{
+        "type": "Feature",
+    "geometry":{
+        "type": "Point",
+        "coordinates":[26.080781479320038, 44.481185504828744]
+    },
+    "properties":{
+        "name":"In Herastrau"
+    }
+    },{
+        "type": "Feature",
+    "geometry":{
+        "type": "Point",
+        "coordinates":[26.097780824556263, 44.410690513312794]
+    },
+    "properties":{
+        "name":"La Statuie"
+    }
+    },{
+        "type": "Feature",
+    "geometry":{
+        "type": "Point",
+        "coordinates":[26.07607080984371, 44.44709646366773]
+    },
+    "properties":{
+        "name":"La Gara"
+    }
+    },{
+        "type": "Feature",
+    "geometry":{
+        "type": "Point",
+        "coordinates":[26.078643990072948, 44.492697150820156]
+    },
+    "properties":{
+        "name":"Baneasa Mall"
+    }
+    },{
+        "type": "Feature",
+    "geometry":{
+        "type": "Point",
+        "coordinates":[26.091514334106293, 44.46899444885983]
+    },
+    "properties":{
+        "name":"La Ceausescu"
+    }
+    }]
+}
