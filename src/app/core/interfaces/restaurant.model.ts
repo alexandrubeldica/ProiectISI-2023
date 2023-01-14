@@ -1,5 +1,9 @@
 export default class Restaurant {
     name: string;
-    longitude: string;
-    latitude: string;
+    latitude: number;
+    longitude: number;
+
+    constructor (
+    ) {
+    }
   }

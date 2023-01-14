@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { AngularFireDatabase, AngularFireList } from '@angular/fire/compat/database';
+import { AngularFireDatabase } from '@angular/fire/compat/database';
+import { AngularFireList } from '@angular/fire/compat/database';
 import Restaurant from '../interfaces/restaurant.model';
 import { Observable } from 'rxjs';
 
@@ -7,25 +8,24 @@ import { Observable } from 'rxjs';
   providedIn:'root'
 })
 export class FirebaseService {
-  restaurants: AngularFireList<Restaurant>
   listFeed: Observable<any[]>;
   objFeed: Observable<any>;
+  restaurantRef: AngularFireList<Restaurant>;
 
-  constructor(public db: AngularFireDatabase) {
-  }
+  constructor(public db: AngularFireDatabase) { }
 
   connectToDatabase() {
     this.listFeed = this.db.list('list').valueChanges();
     this.objFeed = this.db.object('obj').valueChanges();
   }
 
-  create(restaurant: Restaurant): any {
-    return this.restaurants.push(restaurant);
+  addPointItem(restaurant: Restaurant) {
+    return this.db.list('list').push(restaurant);
   }
 
-  addPointItem(restaurant: Restaurant) {
-    this.db.list('list').push(restaurant);
-    // console.log(this.db.database.ref('list').key);
+  getAllRestaurants(): AngularFireList<Restaurant> {
+    this.restaurantRef = this.db.list<Restaurant>('list');
+    return this.restaurantRef;
   }
 
 }

@@ -5,13 +5,15 @@ import {
   ViewChild,
   EventEmitter,
   OnDestroy } from '@angular/core';
+import { FirebaseService } from 'src/app/core/services/firebase-service.service';
 
 import { AuthService } from '../../core/services/auth.service';
 import { Router } from '@angular/router';
 import { setDefaultOptions, loadModules } from 'esri-loader';
 import { Subscription } from "rxjs";
+import Restaurant from 'src/app/core/interfaces/restaurant.model';
 import esri = __esri; // Esri TypeScript Types
-
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-dashboard-admin',
@@ -19,7 +21,7 @@ import esri = __esri; // Esri TypeScript Types
   styleUrls: ['./dashboard-admin.component.scss'],
 })
 export class DashboardAdminComponent implements OnInit, OnDestroy {
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(private authService: AuthService, private router: Router, private fbs: FirebaseService) {}
 
   @ViewChild("mapViewNode", { static: true }) private mapViewEl: ElementRef;
 
@@ -33,7 +35,9 @@ export class DashboardAdminComponent implements OnInit, OnDestroy {
   _RouteParameters;
   _FeatureSet;
   _Point;
+  _Locate;
   _locator;
+  _Track;
 
   // Instances
   map: esri.Map;
@@ -43,7 +47,7 @@ export class DashboardAdminComponent implements OnInit, OnDestroy {
  
 
   // Attributes
-  zoom = 12;
+  zoom = 13;
   center: Array<number> = [26.10253839,44.4267674];
   basemap = "streets-vector";
   loaded = false;
@@ -51,6 +55,12 @@ export class DashboardAdminComponent implements OnInit, OnDestroy {
   dir: number = 0;
   count: number = 0;
   timeoutHandler = null;
+  baseLayer: __esri.FeatureLayer;
+  featureCollection: any[] = [];
+  layer: __esri.FeatureLayer;
+
+  // firebase sync
+  isConnected: boolean = false;
 
   async initializeMap() {
     try {
@@ -59,7 +69,7 @@ export class DashboardAdminComponent implements OnInit, OnDestroy {
       setDefaultOptions({ css: true });
 
       // Load the modules for the ArcGIS API for JavaScript
-      const [esriConfig, Map, MapView, FeatureLayer, Graphic, Point, GraphicsLayer] = await loadModules([
+      const [esriConfig, Map, MapView, FeatureLayer, Graphic, Point, GraphicsLayer, Locate, Track] = await loadModules([
         "esri/config",
         "esri/Map",
         "esri/views/MapView",
@@ -67,9 +77,9 @@ export class DashboardAdminComponent implements OnInit, OnDestroy {
         "esri/Graphic",
         "esri/geometry/Point",
         "esri/layers/GraphicsLayer",
+        "esri/widgets/Locate",
+        "esri/widgets/Track",
       ]);
-
-      // esriConfig.apiKey = "MY_API_KEY";
 
       this._Map = Map;
       this._MapView = MapView;
@@ -77,6 +87,8 @@ export class DashboardAdminComponent implements OnInit, OnDestroy {
       this._Graphic = Graphic;
       this._GraphicsLayer = GraphicsLayer;
       this._Point = Point;
+      this._Locate = Locate;
+      this._Track = Track
 
       esriConfig.apiKey = "AAPK3bb84377534f45308d3724b0ff5fc06al8ttIhyK2iQI9_x3xU_4zItzpcq56u99ddU2j2zJODpfc2abUERjNmfatJZuvyaz";
 
@@ -90,8 +102,8 @@ export class DashboardAdminComponent implements OnInit, OnDestroy {
       this.addFeatureLayers();
       this.addGraphicLayers();
 
-      this.addPoint(this.pointCoords[1], this.pointCoords[0], true);
-
+      this.initializePointsOnMap();
+      
       // Initialize the MapView
       const mapViewProperties = {
         container: this.mapViewEl.nativeElement,
@@ -102,6 +114,8 @@ export class DashboardAdminComponent implements OnInit, OnDestroy {
 
       this.view = new MapView(mapViewProperties);
 
+      this.myLocation();
+      
       // Fires `pointer-move` event when user clicks on "Shift"
       // key and moves the pointer on the view.
       this.view.on('pointer-move', ["Shift"], (event) => {
@@ -118,40 +132,47 @@ export class DashboardAdminComponent implements OnInit, OnDestroy {
     }
   }
 
+  myLocation() {
+    let locate = new this._Locate({
+      view: this.view,
+      useHeadingEnabled: false,
+      goToOverride: function(view, options) {
+        options.target.scale = 1500;
+        return view.goTo(options.target);
+      }
+    });
+    this.view.ui.add(locate, "top-left");
+  }
+
   addGraphicLayers() {
     this.graphicsLayer = new this._GraphicsLayer();
     this.map.add(this.graphicsLayer);
   }
 
   addFeatureLayers() {
-    // Trailheads feature layer (points)
-    var trailheadsLayer: __esri.FeatureLayer = new this._FeatureLayer({
-      url:
-        "https://services3.arcgis.com/GVgbJbqm8hXASVYi/arcgis/rest/services/Trailheads/FeatureServer/0"
+    this.baseLayer = new this._FeatureLayer({
+      url: "https://services7.arcgis.com/qXFryylB4wtUJ9ja/arcgis/rest/services/restaurante_in_bucuresti/FeatureServer/0",
+      popupTemplate: {
+        "title": "{name}"
+      }
     });
 
-    this.map.add(trailheadsLayer);
+    this.map.add(this.baseLayer);
 
-    // Trails feature layer (lines)
-    var trailsLayer: __esri.FeatureLayer = new this._FeatureLayer({
-      url:
-        "https://services3.arcgis.com/GVgbJbqm8hXASVYi/arcgis/rest/services/Trails/FeatureServer/0"
-    });
-
-    this.map.add(trailsLayer, 0);
-
-    // Parks and open spaces (polygons)
-    var parksLayer: __esri.FeatureLayer = new this._FeatureLayer({
-      url:
-        "https://services3.arcgis.com/GVgbJbqm8hXASVYi/arcgis/rest/services/Parks_and_Open_Space/FeatureServer/0"
-    });
-
-    this.map.add(parksLayer, 0);
-
+    this.layer = new this._FeatureLayer({
+      source: this.featureCollection,
+      objectIdField: "id",
+      geometryType: "point",
+      popupTemplate: {
+          "title": "{name}"
+      }
+    })
+    this.map.add(this.layer)
+  
     console.log("feature layers added");
   }
 
-  addPoint(lat: number, lng: number, register: boolean) {   
+  addPoint(lat: number, lng: number, name: string, register: boolean) {   
     const point = { //Create a point
       type: "point",
       longitude: lng,
@@ -170,7 +191,25 @@ export class DashboardAdminComponent implements OnInit, OnDestroy {
       symbol: simpleMarkerSymbol
     });
 
-    this.graphicsLayer.add(pointGraphic);
+    // this.graphicsLayer.add(pointGraphic);
+    let feature = new this._Graphic({
+      attributes: {
+        "name": name
+      },
+      layer: this.layer,
+      geometry: {
+        type: "point", 
+        x: lng,
+        y: lat
+      },
+      popupTemplate: {
+        title: name // not working
+      }
+    })
+    this.featureCollection.push(feature)
+    this.layer.applyEdits({
+      addFeatures: [feature]
+    })
     if (register) {
       this.pointGraphic = pointGraphic;
     }
@@ -205,4 +244,49 @@ export class DashboardAdminComponent implements OnInit, OnDestroy {
       this.view.container = null;
     }
   }
+
+  connectFirebase(restaurant: Restaurant) {
+    if (!this.isConnected) {
+      this.fbs.connectToDatabase();
+      this.isConnected = true;
+    }
+    console.log("new: ", restaurant.name);
+    this.addPoint(restaurant.latitude, restaurant.longitude, restaurant.name, false);
+    this.fbs.addPointItem(restaurant);
+    
+  }
+
+  initializePointsOnMap() {
+    if (!this.isConnected) {
+      this.fbs.connectToDatabase();
+      this.isConnected = true;
+    }
+    this.fbs.getAllRestaurants().valueChanges(['child_changed'])
+          .subscribe(actions => {
+            actions.forEach(action => {
+              // this.addPoint(action.latitude, action.longitude, false)
+              // console.log(action.name);
+              let feature = new this._Graphic({
+                  attributes: {
+                    "name": action.name
+                  },
+                  layer: this.layer,
+                  geometry: {
+                    type: "point", 
+                    x: action.longitude,
+                    y: action.latitude
+                  },
+                  popupTemplate: {
+                    title: "{name}" // not working
+                  }
+                })
+                this.featureCollection.push(feature)
+                this.layer.applyEdits({
+                  addFeatures: [feature]
+                })
+              })
+            })
+  }
+
+  
 }
