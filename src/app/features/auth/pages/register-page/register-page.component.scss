@@ -52,6 +52,9 @@ a {
   
   .form-container {
     align-items: center;
+    background-image: url("bg-login-blur.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
     background-color: #fff;
     border-radius: 10px 0 0 10px;
     display: flex;

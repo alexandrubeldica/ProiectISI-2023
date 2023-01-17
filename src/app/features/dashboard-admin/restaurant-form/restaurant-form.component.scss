@@ -1,14 +1,15 @@
 input, textarea { 
 	padding: 9px; 
-	border: solid 1px #E5E5E5; 
+	border: solid 1px #E5E5E5;
+
 	outline: 0; 
-	font: normal 13px/100% Verdana, Tahoma, sans-serif; 
+	font: normal 13px/100% Verdana, Tahoma, sans-serif;
 	width: 200px; 
-	background: #FFFFFF; 
+	background: #FFFFFF;
     box-shadow: rgba(0,0,0, 0.1) 0px 0px 8px; 
 	-moz-box-shadow: rgba(0,0,0, 0.1) 0px 0px 8px; 
 	-webkit-box-shadow: rgba(0,0,0, 0.1) 0px 0px 8px;
-    background: -webkit-gradient(linear, left top, left 25, from(#000000), to(#FFFFFF)); 
+    background: -webkit-gradient(linear, left top, left 25, from(#000000), to(#FFFFFF));
 	background: -moz-linear-gradient(top, #000000, #FFFFFF 25px);
 } 
 
@@ -16,16 +17,36 @@ textarea {
     width: 400px; 
     max-width: 400px; 
     height: 150px; 
-    line-height: 150%; 
-} 
+    line-height: 150%;
+
+}
 
 input:hover, textarea:hover, 
 input:focus, textarea:focus { 
 	border-color: #C9C9C9; 
     -webkit-box-shadow: rgba(0, 0, 0, 0.15) 0px 0px 8px;
-	} 
+} 
   
 .form label { 
-	margin-left: 10px; 
-	color: #999999; 
+ 	margin-right: 100px;
+	color: #999999;
+}
+
+h1, div {
+    margin-top: 10px;
+	margin-bottom: 10px;
+}
+
+.btn {
+	background-color: transparent;
+	border: 2;
+	color: #000000;
+	font-family: 'Open Sans', sans-serif;
+	font-weight: 600;
+	width: 50%;
+	margin: auto;
+}
+
+.btn:hover {
+	background-color: #c7a20048;
 }

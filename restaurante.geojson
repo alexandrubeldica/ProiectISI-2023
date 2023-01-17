@@ -8,6 +8,7 @@
         },
         "properties":{
             "name":"Restaurantul Barrio "
+
         }
     },{
         "type": "Feature",
@@ -260,7 +261,8 @@
         "coordinates":[26.095303324117378, 44.416406409787015]
     },
     "properties":{
-        "name":"Dines"
+        "name":"Dines",
+        "program":"non-stop"
     }
     },{
         "type": "Feature",

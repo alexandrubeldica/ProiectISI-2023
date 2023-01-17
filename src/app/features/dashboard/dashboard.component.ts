@@ -35,6 +35,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
   _Point;
   _locator;
   _Locate;
+  _Search;
 
   // Instances
   map: esri.Map;
@@ -65,7 +66,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
       setDefaultOptions({ css: true });
 
       // Load the modules for the ArcGIS API for JavaScript
-      const [esriConfig, Map, MapView, FeatureLayer, Graphic, Point, GraphicsLayer, Locate] = await loadModules([
+      const [esriConfig, Map, MapView, FeatureLayer, Graphic, Point, GraphicsLayer, Locate, Search] = await loadModules([
         "esri/config",
         "esri/Map",
         "esri/views/MapView",
@@ -74,6 +75,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
         "esri/geometry/Point",
         "esri/layers/GraphicsLayer",
         "esri/widgets/Locate",
+        "esri/widgets/Search"
       ]);
 
       this._Map = Map;
@@ -82,7 +84,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
       this._Graphic = Graphic;
       this._GraphicsLayer = GraphicsLayer;
       this._Point = Point;
-      this._Locate = Locate
+      this._Locate = Locate;
+      this._Search = Search;
 
       esriConfig.apiKey = "AAPK3bb84377534f45308d3724b0ff5fc06al8ttIhyK2iQI9_x3xU_4zItzpcq56u99ddU2j2zJODpfc2abUERjNmfatJZuvyaz";
 
@@ -110,7 +113,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
       this.view = new MapView(mapViewProperties);
 
       this.myLocation();
-
+      this.searchLocation();
+      
       // Fires `pointer-move` event when user clicks on "Shift"
       // key and moves the pointer on the view.
       this.view.on('pointer-move', ["Shift"], (event) => {
@@ -137,6 +141,13 @@ export class DashboardComponent implements OnInit, OnDestroy {
       }
     });
     this.view.ui.add(locate, "top-left");
+  }
+
+  searchLocation() {
+    let findPlace = new this._Search({
+      view: this.view
+    });
+    this.view.ui.add(findPlace, "top-right")
   }
 
   addGraphicLayers() {
@@ -231,8 +242,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
     this.fbs.getAllRestaurants().valueChanges(['child_changed'])
           .subscribe(actions => {
             actions.forEach(action => {
-              // this.addPoint(action.latitude, action.longitude, false)
-              // console.log(action.name);
               let feature = new this._Graphic({
                   attributes: {
                     "name": action.name
@@ -254,4 +263,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
               })
     });
   }
+
+
 }

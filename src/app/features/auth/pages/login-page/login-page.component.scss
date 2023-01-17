@@ -1,3 +1,4 @@
+
 a {
     color: #838383;
     margin-top: 30px;
@@ -22,13 +23,15 @@ a {
   p {
     margin-bottom: 20px;
     text-align: center;
+
   }
   
-  .background {
+  .background{
     align-items: center;
     display: flex;
     height: 100%;
     justify-content: center;
+
   }
   
   .login-container {
@@ -36,6 +39,7 @@ a {
     box-shadow: 0 0 20px 2px #e4e4e4;
     display: flex;
     width: 60%;
+
   }
   
   .text-container {
@@ -52,6 +56,9 @@ a {
   
   .form-container {
     align-items: center;
+    background-image: url("bg-login-blur.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
     background-color: #fff;
     border-radius: 0 10px 10px 0;
     display: flex;
@@ -69,3 +76,12 @@ a {
     background-color: transparent;
     border: 1px solid #fff;
   }
+
+
+
+
+
+
+
+
+
