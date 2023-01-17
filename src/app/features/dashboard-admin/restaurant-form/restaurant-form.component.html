@@ -1,11 +1,13 @@
+
 <div class="container">
     <h1>Add Restaurant</h1>
     <form>
       <div>
         <label for="name">Name</label>
         <p class="form-group">
-          <input type="text" class="form-control" id="name" required [(ngModel)]="restaurant.name" name="name">
+         <input type="text" class="form-control" id="name" required [(ngModel)]="restaurant.name" name="name">
         </p>
+
       </div>
 
       <div>
@@ -22,7 +24,9 @@
         </p>
       </div>
 
-      <button type="reset" class="btn btn-success" (click)="save()">Submit</button>
+      <div class="centered-button">
+        <button type="reset" class="btn btn-success" (click)="save()">Save</button>
+      </div>
     </form>
 </div>
 
